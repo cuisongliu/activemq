@@ -106,8 +106,8 @@
 
     <bean id="jettyPort" class="org.apache.activemq.web.WebConsolePort" init-method="start">
              <!-- the default port number for the web console -->
-        <property name="host" value="0.0.0.0"/>
-        <property name="port" value="8161"/>
+        <property name="host" value="${jetty.host}"/>
+        <property name="port" value="${jetty.port}"/>
     </bean>
 
     <bean id="Server" depends-on="jettyPort" class="org.eclipse.jetty.server.Server"
