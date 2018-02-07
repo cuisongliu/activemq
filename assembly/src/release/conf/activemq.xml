@@ -16,9 +16,9 @@
 -->
 <!-- START SNIPPET: example -->
 <beans
-  xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
     <!-- Allows us to use system properties as variables in this configuration file -->
@@ -31,7 +31,7 @@
         </property>
     </bean>
 
-   <!-- Allows accessing the server log -->
+    <!-- Allows accessing the server log -->
     <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
           lazy-init="false" scope="singleton"
           init-method="start" destroy-method="stop">
@@ -44,21 +44,21 @@
 
         <destinationPolicy>
             <policyMap>
-              <policyEntries>
-                <policyEntry topic=">" >
-                    <!-- The constantPendingMessageLimitStrategy is used to prevent
-                         slow topic consumers to block producers and affect other consumers
-                         by limiting the number of messages that are retained
-                         For more information, see:
+                <policyEntries>
+                    <policyEntry topic=">" >
+                        <!-- The constantPendingMessageLimitStrategy is used to prevent
+                             slow topic consumers to block producers and affect other consumers
+                             by limiting the number of messages that are retained
+                             For more information, see:
 
-                         http://activemq.apache.org/slow-consumer-handling.html
+                             http://activemq.apache.org/slow-consumer-handling.html
 
-                    -->
-                  <pendingMessageLimitStrategy>
-                    <constantPendingMessageLimitStrategy limit="1000"/>
-                  </pendingMessageLimitStrategy>
-                </policyEntry>
-              </policyEntries>
+                        -->
+                        <pendingMessageLimitStrategy>
+                            <constantPendingMessageLimitStrategy limit="1000"/>
+                        </pendingMessageLimitStrategy>
+                    </policyEntry>
+                </policyEntries>
             </policyMap>
         </destinationPolicy>
 
@@ -74,10 +74,6 @@
             <managementContext createConnector="false"/>
         </managementContext>
 
-        <networkConnectors>
-            <networkConnector uri="static:(${activemq.network.connector.uri})" duplex="true"/>
-        </networkConnectors>
-
         <!--
             Configure message persistence for the broker. The default persistence
             mechanism is the KahaDB store (identified by the kahaDB tag).
@@ -86,25 +82,16 @@
             http://activemq.apache.org/persistence.html
         -->
         <persistenceAdapter>
-            <!--<kahaDB directory="${activemq.data}/kahadb"/>-->
-            <!--需要的组的node和replicas一致 2n+1 -->
-            <replicatedLevelDB
-                directory="${activemq.data}/leveldb"
-                replicas="3"
-                bind="${acitvemq.levelDB.bind}"
-                zkAddress="${acitvemq.levelDB.zkAddress}"
-                hostname="${acitvemq.levelDB.hostname}"
-                zkPath="${acitvemq.levelDB.zkPath}"
-            />
+            <kahaDB directory="${activemq.data}/kahadb"/>
         </persistenceAdapter>
 
 
-          <!--
-            The systemUsage controls the maximum amount of space the broker will
-            use before disabling caching and/or slowing down producers. For more information, see:
-            http://activemq.apache.org/producer-flow-control.html
-          -->
-          <systemUsage>
+        <!--
+          The systemUsage controls the maximum amount of space the broker will
+          use before disabling caching and/or slowing down producers. For more information, see:
+          http://activemq.apache.org/producer-flow-control.html
+        -->
+        <systemUsage>
             <systemUsage>
                 <memoryUsage>
                     <memoryUsage percentOfJvmHeap="70" />
@@ -149,4 +136,4 @@
     <import resource="jetty.xml"/>
 
 </beans>
-<!-- END SNIPPET: example -->
+        <!-- END SNIPPET: example -->
